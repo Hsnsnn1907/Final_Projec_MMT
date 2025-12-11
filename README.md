@@ -1,24 +1,27 @@
 <div align="center">
 
 # 🛡️ Hệ thống Cảnh báo Sớm Tấn công Mạng Đa đầu vào
+
 ## Multi-Input Hybrid IDS (LSTM + DNN)
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?style=for-the-badge&logo=tensorflow)
 ![Status](https://img.shields.io/badge/Status-Development-green?style=for-the-badge)
 
-**Đồ án Mạng Máy Tính - HK251** *Giảng viên hướng dẫn: Thầy Bùi Xuân Giang*
+**Đồ án Mạng Máy Tính - HK251** _Giảng viên hướng dẫn: Thầy Bùi Xuân Giang_
 
 </div>
 
 ---
+
 # 📋 Phần 1: Mở đầu
 
 ## 📖 Giới thiệu
+
 Dự án xây dựng một hệ thống phát hiện xâm nhập (IDS) lai ghép sử dụng kỹ thuật **Học sâu (Deep Learning)**. Hệ thống áp dụng chiến thuật **Feature Splitting** trên bộ dữ liệu chuẩn **CIC-IDS2017** để giả lập kiến trúc Đa đầu vào (Multi-Input):
 
-* ⏱️ **Input A (Temporal):** Đặc trưng thời gian -> xử lý bởi **LSTM**.
-* 📊 **Input B (Statistical):** Đặc trưng thống kê -> xử lý bởi **DNN**.
+- ⏱️ **Input A (Temporal):** Đặc trưng thời gian -> xử lý bởi **LSTM**.
+- 📊 **Input B (Statistical):** Đặc trưng thống kê -> xử lý bởi **DNN**.
 
 Mục tiêu: Phát hiện và phân loại chính xác các cuộc tấn công (DDoS, PortScan...) và đưa ra cảnh báo sớm.
 
@@ -27,10 +30,12 @@ Mục tiêu: Phát hiện và phân loại chính xác các cuộc tấn công (
 ## 🛠️ Cài đặt & Hướng dẫn chạy
 
 ### 1. Yêu cầu hệ thống
-* **Python**: 3.8 trở lên
-* **Bộ nhớ**: Khuyến nghị 8GB RAM trở lên (để xử lý dữ liệu CSV)
+
+- **Python**: 3.8 trở lên
+- **Bộ nhớ**: Khuyến nghị 8GB RAM trở lên (để xử lý dữ liệu CSV)
 
 ### 2. Cài đặt thư viện
+
 Chạy lệnh sau để cài đặt các gói phụ thuộc:
 
 ```bash
@@ -39,23 +44,25 @@ pip install -r requirements.txt
 
 ### 3. Chuẩn bị Dữ liệu
 
-* Tải bộ dữ liệu CIC-IDS2017.
-* Đổi tên file thành CIC-IDS2017.csv.
-* Di chuyển file vào thư mục: data/raw/.
+- Tải bộ dữ liệu CIC-IDS2017.
+- Đổi tên file thành CIC-IDS2017.csv.
+- Tạo folder data ở cùng trong folder Final_Project_MMT.
+- Tạo mục raw với đường dẫn data/raw/.
+- Di chuyển file vào thư mục: data/raw/.
 
 ## 🚀 Quy trình chạy (Workflow)
 
-
 ### Bước 1: Tiền xử lý dữ liệu (Preprocessing)
 
-Script này sẽ đọc file CSV, làm sạch, tách đặc trưng thành 2 nhóm (Time & Stat) và lưu kết quả vào ```data/processed/.```
+Script này sẽ đọc file CSV, làm sạch, tách đặc trưng thành 2 nhóm (Time & Stat) và lưu kết quả vào `data/processed/.`
 
 ```bash
 python src/preprocess.py
 ```
+
 ### Bước 2: Huấn luyện Mô hình (Training)
 
-Xây dựng mô hình Hybrid (LSTM + DNN), huấn luyện và lưu model vào ```saved_models/```.
+Xây dựng mô hình Hybrid (LSTM + DNN), huấn luyện và lưu model vào `saved_models/`.
 
 ```bash
 python src/train.py
@@ -71,9 +78,7 @@ python src/alert_system.py
 
 ---
 
-# 📋 Phần 2: Cấu trúc thư mục 
-
-
+# 📋 Phần 2: Cấu trúc thư mục
 
 ---
 
@@ -99,4 +104,5 @@ Multi-Input_IDS/
 └── README.md                 # Hướng dẫn sử dụng
 
 ```
+
 ---
