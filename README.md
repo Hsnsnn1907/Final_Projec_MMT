@@ -6,7 +6,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?style=for-the-badge&logo=tensorflow)
-![Status](https://img.shields.io/badge/Status-Development-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 
 **Đồ án Mạng Máy Tính - HK251** _Giảng viên hướng dẫn: Thầy Bùi Xuân Giang_
 
@@ -46,8 +46,6 @@ pip install -r requirements.txt
 
 - Tải bộ dữ liệu CIC-IDS2017.
 - Đổi tên file thành CIC-IDS2017.csv.
-- Tạo folder data ở cùng trong folder Final_Project_MMT.
-- Tạo mục raw với đường dẫn data/raw/.
 - Di chuyển file vào thư mục: data/raw/.
 
 ## 🚀 Quy trình chạy (Workflow)
@@ -82,23 +80,26 @@ python src/alert_system.py
 
 ---
 
-## 📂 2.1 Cấu trúc Dự án
+## 📂 Cấu trúc Dự án
 
 ```text
 Multi-Input_IDS/
 │
 ├── data/
-│   ├── raw/                  # Chứa file gốc CIC-IDS2017.csv
-│   └── processed/            # Chứa file .npy sau khi tiền xử lý
+│   ├── raw/                  # Chứa file CIC-IDS2017.csv (sau khi gộp)
+│   └── processed/            # Chứa file .npy sau khi tiền xử lý (để train nhanh)
 │
 ├── saved_models/             # Nơi lưu model.h5 và các scaler (.pkl)
 │
-├── src/
+├── src/                      # Source code chính
+│   ├── __init__.py           # Đánh dấu package
 │   ├── utils.py              # Cấu hình chung (Tên cột, Đường dẫn)
-│   ├── preprocess.py         # Code xử lý dữ liệu & Tách đặc trưng
-│   ├── model.py              # Kiến trúc mạng LSTM + DNN
+│   ├── preprocess.py         # Code làm sạch, chuẩn hóa & tách đặc trưng
+│   ├── model.py              # Kiến trúc mạng lai LSTM + DNN
 │   ├── train.py              # Script huấn luyện mô hình
-│   └── alert_system.py       # Hệ thống cảnh báo & Dự đoán
+│   ├── demo_attack.py        # Demo tấn công giả lập (Visual Demo)
+│   ├── evaluate_mass.py      # Script đánh giá diện rộng (Batch Testing)
+│   └── alert_system.py       # Hệ thống cảnh báo & Dự đoán thời gian thực
 │
 ├── requirements.txt          # Danh sách thư viện
 └── README.md                 # Hướng dẫn sử dụng
