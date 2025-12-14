@@ -5,7 +5,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?style=for-the-badge&logo=tensorflow)
-![Status](https://img.shields.io/badge/Status-Development-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
 
 **Đồ án Mạng Máy Tính - HK251** *Trường Đại học Bách Khoa - ĐHQG TP.HCM*
 
@@ -16,8 +16,8 @@
 ## 📖 Giới thiệu
 Dự án xây dựng một hệ thống phát hiện xâm nhập (IDS) lai ghép sử dụng kỹ thuật **Học sâu (Deep Learning)**. Hệ thống áp dụng chiến thuật **Feature Splitting** (Tách đặc trưng) trên bộ dữ liệu chuẩn **CIC-IDS2017** để giả lập kiến trúc Đa đầu vào (Multi-Input) từ một nguồn dữ liệu duy nhất:
 
-* ⏱️ **Input A (Temporal):** Các đặc trưng liên quan đến thời gian, chuỗi (Flow Duration, IAT...) -> Xử lý bởi mạng **LSTM**.
-* 📊 **Input B (Statistical):** Các đặc trưng thống kê (Packet count, Flags...) -> Xử lý bởi mạng **DNN**.
+* ⏱️ **Input A (Temporal):** Các đặc trưng liên quan đến thời gian, chuỗi (Flow Duration, IAT...) -> Xử lý bởi mạng **LSTM** để nắm bắt quy luật thời gian.
+* 📊 **Input B (Statistical):** Các đặc trưng thống kê (Packet count, Flags...) -> Xử lý bởi mạng **DNN** để phân tích cường độ lưu lượng.
 
 **Mục tiêu:** Phát hiện và phân loại chính xác 15 loại tấn công mạng (DDoS, PortScan, Botnet...) và đưa ra cảnh báo sớm kèm mức độ rủi ro.
 
@@ -40,75 +40,76 @@ Multi-Input_IDS/
 │   ├── preprocess.py         # Code làm sạch, chuẩn hóa & tách đặc trưng
 │   ├── model.py              # Kiến trúc mạng lai LSTM + DNN
 │   ├── train.py              # Script huấn luyện mô hình
+│   ├── demo_attack.py        # Demo tấn công giả lập (Visual Demo)
+│   ├── evaluate_mass.py      # Script đánh giá diện rộng (Batch Testing)
 │   └── alert_system.py       # Hệ thống cảnh báo & Dự đoán thời gian thực
 │
 ├── setup_data.py             # Script gộp các file CSV con thành file tổng
 ├── requirements.txt          # Danh sách thư viện phụ thuộc
 └── README.md                 # Tài liệu hướng dẫn
 ```
-🛠️ Cài đặt Môi trường
+# 🛠️ Cài đặt Môi trường
 Để tránh xung đột thư viện, vui lòng sử dụng môi trường ảo (venv).
 
-1. Tạo và kích hoạt môi trường ảo
+## 1. Tạo và kích hoạt môi trường ảo
 Mở Terminal tại thư mục gốc dự án và chạy:
-
-# Tạo môi trường ảo tên là 'venv'
-```
+### Tạo môi trường ảo
+```bash
 python -m venv venv
 ```
-# Kích hoạt (Windows)
-```
+### Kích hoạt (Windows)
+```bash
 .\venv\Scripts\activate
 ```
-# Kích hoạt (Mac/Linux)
-```
+### Kích hoạt (Mac/Linux)
+```bash
 source venv/bin/activate
 ```
-(Sau khi kích hoạt, đầu dòng lệnh sẽ có chữ (venv) màu xanh)
-
-2. Cài đặt thư viện
+## 2. Cài đặt thư viện
 ```bash
 pip install -r requirements.txt
 ```
+# 💾 Chuẩn bị Dữ liệu (Bắt buộc)
+Tải xuống: Truy cập [Dataset CIC-IDS2017](http://cicresearch.ca/CICDataset/CIC-IDS-2017/Dataset/) hoặc Kaggle, tải file ```MachineLearningCSV.zip.```
 
-💾 Chuẩn bị Dữ liệu (Quan trọng)
-Mô hình yêu cầu file dữ liệu tổng hợp CIC-IDS2017.csv. Hãy làm theo các bước sau:
-
-Tải xuống: Truy cập Dataset CIC-IDS2017 hoặc Kaggle, tải file MachineLearningCSV.zip.
-
-Giải nén: Giải nén file zip, bạn sẽ được một thư mục chứa 8 file CSV con (tương ứng các ngày trong tuần).
-
-Di chuyển: Copy toàn bộ thư mục giải nén đó vào đường dẫn data/raw/MachineLearningCVE/.
+Giải nén: Copy toàn bộ các file CSV đã giải nén vào đường dẫn ```data/raw/MachineLearningCVE/.```
 
 Gộp file: Chạy script sau để tự động gộp 8 file con thành 1 file tổng:
-
-
-```Bash
-
+```bash
 python setup_data.py
 ```
-✅ Sau bước này, kiểm tra thư mục data/raw/ thấy có file CIC-IDS2017.csv (~2-3GB) là thành công.
+✅ Kiểm tra: Thư mục data/raw/ có file CIC-IDS2017.csv (~2-3GB) là thành công.
+# 🚀 Hướng dẫn Sử dụng (Workflow)
+Lưu ý: Luôn chạy lệnh từ thư mục gốc dự án để tránh lỗi import.
 
-🚀 Quy trình chạy (Workflow)
-Lưu ý: Luôn chạy lệnh từ thư mục gốc dự án và sử dụng cấu trúc python -m src.ten_module để tránh lỗi import.
-
-Bước 1: Tiền xử lý dữ liệu (Preprocessing)
-Script này sẽ đọc file CSV lớn, làm sạch (xóa NaN/Inf), mã hóa nhãn, tách đặc trưng thành 2 nhóm (Time & Stat), chuẩn hóa MinMax và lưu kết quả vào data/processed/.
-
-```Bash
-
+## 1️ Tiền xử lý dữ liệu (Preprocessing)
+Làm sạch dữ liệu (xóa NaN/Inf), mã hóa nhãn, tách đặc trưng và chuẩn hóa.
+```bash
 python -m src.preprocess
 ```
-
-Bước 2: Huấn luyện Mô hình (Training)
-Xây dựng mô hình Hybrid, load dữ liệu đã xử lý và tiến hành huấn luyện (Training). Model tốt nhất sẽ được lưu vào saved_models/hybrid_model.h5.
-
+## 2️ Huấn luyện Mô hình (Training)
+Xây dựng mô hình Hybrid và huấn luyện. Model sẽ được lưu vào ```saved_models/hybrid_model.h5.```
 ```bash
 python -m src.train
 ```
-Bước 3: Chạy Hệ thống Cảnh báo (Alert System)
-Load model đã train, giả lập luồng dữ liệu mạng mới và in ra cảnh báo nếu phát hiện tấn công.
-
-```Bash
-python -m src.alert_system.py
+## 3️ Đánh giá diện rộng (Mass Evaluation) 🔥 Mới
+Chạy kiểm thử trên tập dữ liệu lớn (ví dụ: 500,000 mẫu) để lấy chỉ số chính xác thực tế.
+```bash
+python -m src.evaluate_mass
 ```
+## 4️ Chạy Demo Tấn công (Visual Demo) 🔥 Mới
+Giả lập các cuộc tấn công cụ thể để xem hệ thống cảnh báo "bắt trộm" như thế nào.
+```bash
+python -m src.demo_attack
+```
+# 📊 Kết quả Thực nghiệm
+Dựa trên kết quả kiểm thử với 500,000 mẫu dữ liệu thực tế:
+
+Độ chính xác tổng thể (Accuracy): ~94%
+
+Khả năng phát hiện (Recall):
+
+✅ DDoS / PortScan / DoS: Đạt 99% - 100%. Mô hình hoạt động cực tốt với các tấn công lưu lượng lớn.
+
+⚠️ Web Attacks (XSS, SQLi): Hiệu quả thấp (< 10%). Lý do: Các tấn công này nằm ở tầng ứng dụng (payload), khó phát hiện chỉ bằng thông số thống kê lưu lượng (Flow Stats).
+
