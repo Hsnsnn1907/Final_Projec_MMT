@@ -7,7 +7,7 @@ SCALER_TIME_PATH = "saved_models/scaler_time.pkl"
 SCALER_STAT_PATH = "saved_models/scaler_stat.pkl"
 LABEL_ENCODER_PATH = "saved_models/label_encoder.pkl"
 
-# --- ĐỊNH NGHĨA FEATURE SPLITTING (Member 1 cần điền đúng tên cột ở đây) ---
+# --- ĐỊNH NGHĨA FEATURE SPLITTING  ---
 
 # Input A: Nhóm Thời gian (Time) -> Cho LSTM
 TIME_FEATURES = [
