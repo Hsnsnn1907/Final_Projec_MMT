@@ -50,7 +50,7 @@ def load_and_preprocess():
     X_time_train, X_time_test, X_stat_train, X_stat_test, y_train, y_test = train_test_split(
         X_time, X_stat, y, test_size=0.2, random_state=42, stratify=y
     )
-
+    print(f"Tách đặc trưng xong")
     return X_time_train, X_stat_train, X_time_test, X_stat_test, y_train, y_test, num_classes
 
 if __name__ == "__main__":
